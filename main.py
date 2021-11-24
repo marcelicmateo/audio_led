@@ -1,10 +1,24 @@
-data = {
-    "GPIO1": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
-    "GPIO2": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
-    "GPIO3": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
-    "GPIO4": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
-}
+audio1 = "/home/pi/playout/audio1.wav"
+audio2 = "/home/pi/playout/audio2.wav"
+audio3 = "/home/pi/playout/audio3.wav"
+audio4 = "/home/pi/playout/audio5.wav"
+# define btns
+btnStop = 21  # 40
+btn1 = 20  # 38
+btn2 = 16  # 36
+btn3 = 6  # 31
+btn4 = 5  # 29
 
+led1 = 12  # 32  # PWM0
+led2 = 13  # 33  # PWM1
+led3 = 22  # 15
+led4 = 27  # 13
+data = {
+    btn1: {"audio": audio1, "led_pin": led1},
+    btn2: {"audio": audio2, "led_pin": led2},
+    btn3: {"audio": audio3, "led_pin": led3},
+    btn4: {"audio": audio4, "led_pin": led4},
+}
 from gpiozero import Button, PWMLED
 from dataclasses import dataclass
 from pathlib import Path
@@ -63,6 +77,10 @@ def cb_b3():
 
 def cb_b4():
     cb_b(4)
+
+
+def cb_b_stop():
+    player.stop()
 
 
 for i, c in enumerate(cx):
