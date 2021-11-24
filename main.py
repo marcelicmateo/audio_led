@@ -1,6 +1,3 @@
-from typing import Any
-from gpiozero import Button, PWMLED
-
 data = {
     "GPIO1": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
     "GPIO2": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
@@ -8,8 +5,10 @@ data = {
     "GPIO4": {"audio": "path_to_audio", "led_pin": "GPIOXXX"},
 }
 
+from gpiozero import Button, PWMLED
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 
 @dataclass
