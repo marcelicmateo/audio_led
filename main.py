@@ -40,7 +40,7 @@ for key, data in data.items():
             button=Button(
                 key,
                 bounce_time=0.030,
-                pull_up=False,
+                pull_up=True,
             ),
             audio=data.get("audio"),
             led=PWMLED(data.get("led_pin")),
