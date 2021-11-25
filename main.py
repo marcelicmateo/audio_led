@@ -13,6 +13,7 @@ led1 = 12  # 32  # PWM0
 led2 = 13  # 33  # PWM1
 led3 = 22  # 15
 led4 = 27  # 13
+
 data = {
     btn1: {"audio": audio1, "led_pin": led1},
     btn2: {"audio": audio2, "led_pin": led2},
@@ -84,7 +85,7 @@ def cb_b_stop():
 
 
 for i, c in enumerate(cx):
-    c.button.when_pressed = eval("cb_b{}".format(i))
+    c.button.when_pressed = eval("cb_b{}".format(i + 1))
 
 
 from time import sleep
