@@ -60,6 +60,7 @@ def cb_b(number):
     for i, c in enumerate(cx):
         if i == number:
             c.led.pulse(fade_in_time=FADE_TIME, fade_out_time=0, n=1)
+            c.led.on()
         elif c.led.value != 0:
             c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1)
 
