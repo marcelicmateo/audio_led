@@ -83,7 +83,12 @@ def cb_b4():
 def cb_b_stop():
     player.stop()
 
-
+button_stop=Button(
+                btnStop,
+                bounce_time=0.030,
+                pull_up=True,
+            )
+button_stop.when_pressed=cb_b_stop
 for i, c in enumerate(cx):
     c.button.when_pressed = eval("cb_b{}".format(i + 1))
 
