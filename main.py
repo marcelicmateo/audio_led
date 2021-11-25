@@ -53,16 +53,14 @@ player = MPV(vid="no", input_vo_keyboard=False)
 
 FADE_TIME = 1
 
-
 def cb_b(number):
     player.stop()
     player.play(cx[number].audio)
-    for i, c in enumerate(cx):
-        if i == number:
-            c.led.pulse(fade_in_time=FADE_TIME, fade_out_time=0, n=1)
-            c.led.on()
-        elif c.led.value != 0:
+    for c in cx:
+        if c.led.value != 0:
             c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1)
+    cx[number].led.pulse(fade_in_time=FADE_TIME, fade_out_time=0, n=1, background=False)
+    cx[number].led.on()
 
 
 def cb_b1():
@@ -82,6 +80,9 @@ def cb_b4():
 
 
 def cb_b_stop():
+    for c in cx:
+        if c.led.value != 0:
+            c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1)
     player.stop()
 
 button_stop=Button(
