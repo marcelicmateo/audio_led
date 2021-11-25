@@ -42,7 +42,7 @@ for key, data in data.items():
                 bounce_time=0.030,
                 pull_up=False,
             ),
-            audio=Path(data.get("audio")),
+            audio=data.get("audio"),
             led=PWMLED(data.get("led_pin")),
         )
     )
