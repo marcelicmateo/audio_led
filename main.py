@@ -47,11 +47,12 @@ for key, data in data.items():
         )
     )
 
-from mpv import MPV
+from mpv import MPV, PropertyUnavailableError
 
 player = MPV(vid="no", input_vo_keyboard=False)
 
 FADE_TIME = 1
+
 
 def cb_b(number):
     player.stop()
@@ -82,15 +83,17 @@ def cb_b4():
 def cb_b_stop():
     for c in cx:
         if c.led.value != 0:
-            c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1)
+            c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1, background=False)
     player.stop()
 
-button_stop=Button(
-                btnStop,
-                bounce_time=0.030,
-                pull_up=True,
-            )
-button_stop.when_pressed=cb_b_stop
+
+button_stop = Button(
+    btnStop,
+    bounce_time=0.030,
+    pull_up=True,
+)
+button_stop.when_pressed = cb_b_stop
+
 for i, c in enumerate(cx):
     c.button.when_pressed = eval("cb_b{}".format(i + 1))
 
@@ -99,3 +102,6 @@ from time import sleep
 
 while True:
     sleep(1)
+    player.wait_until_paused()
+    for c in cx:
+        c.led.off()
