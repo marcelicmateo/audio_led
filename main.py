@@ -65,19 +65,19 @@ def cb_b(number):
 
 
 def cb_b1():
-    cb_b(1)
+    cb_b(0)
 
 
 def cb_b2():
-    cb_b(2)
+    cb_b(1)
 
 
 def cb_b3():
-    cb_b(3)
+    cb_b(2)
 
 
 def cb_b4():
-    cb_b(4)
+    cb_b(3)
 
 
 def cb_b_stop():
