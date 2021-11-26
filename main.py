@@ -20,7 +20,7 @@ data = {
     btn3: {"audio": audio3, "led_pin": led3},
     btn4: {"audio": audio4, "led_pin": led4},
 }
-from gpiozero import Button, PWMLED
+from gpiozero import Button, LED
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -43,7 +43,7 @@ for key, data in data.items():
                 pull_up=True,
             ),
             audio=data.get("audio"),
-            led=PWMLED(data.get("led_pin")),
+            led=LED(data.get("led_pin")),
         )
     )
 
@@ -59,8 +59,7 @@ def cb_b(number):
     player.play(cx[number].audio)
     for c in cx:
         if c.led.value != 0:
-            c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1)
-    cx[number].led.pulse(fade_in_time=FADE_TIME, fade_out_time=0, n=1, background=False)
+            c.led.off()
     cx[number].led.on()
 
 
@@ -81,9 +80,6 @@ def cb_b4():
 
 
 def cb_b_stop():
-    for c in cx:
-        if c.led.value != 0:
-            c.led.pulse(fade_in_time=0, fade_out_time=FADE_TIME, n=1, background=False)
     player.stop()
 
 
