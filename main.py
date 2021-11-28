@@ -74,7 +74,7 @@ def cb_b(number):
     player.wait_until_playing()
     logging.debug("LED ON: {}".format(cx[number]))
     cx[number].led.on()
-    player.wait_until_paused()
+    player.wait_until_playback()
     logging.debug("LED OFF: {}".format(cx[number]))
     cx[number].led.off()
 
