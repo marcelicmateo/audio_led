@@ -1,6 +1,11 @@
 import logging
 import time
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s', filename='audio.log', encoding='utf-8')
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s",
+    filename="audio.log",
+)
 
 
 audio1 = "/home/pi/playout/audio1.wav"
@@ -55,18 +60,20 @@ for key, data in data.items():
     )
 
 from mpv import MPV, PropertyUnavailableError
+
 player = MPV(vid="no", input_vo_keyboard=False)
 logging.debug("Init player: {}".format(player))
 # Property access, these can be changed at runtime
-@player.property_observer('time-pos')
+@player.property_observer("time-pos")
 def time_observer(_name, value):
     # Here, _value is either None if nothing is playing or a float containing
     # fractional seconds since the beginning of the file.
-    print('Now playing at {:.2f}s'.format(value))
+    if value not is None:
+        print("Now playing at {:.2f}s".format(value))
 
 
 def cb_b(number):
-    #player.stop()
+    # player.stop()
     logging.debug("Playing audio: {}".format(cx[number].audio))
     player.play(cx[number].audio)
     for c in cx:
@@ -100,6 +107,7 @@ def cb_b4(btn):
 def cb_b_stop(btn):
     logging.debug("STOP:{} was pressed".format(btn.pin))
     player.stop()
+
 
 button_stop = Button(
     btnStop,
