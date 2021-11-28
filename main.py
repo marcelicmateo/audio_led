@@ -127,3 +127,7 @@ logging.debug("Running while loop")
 while True:
     sleep(1)
     player.wait_for_property('idle_active')
+    logging.debug("It is idle, kill all leds")
+    for c in cx:
+        c.led.off()
+
