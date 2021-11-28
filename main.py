@@ -56,7 +56,7 @@ for key, data in data.items():
 
 from mpv import MPV, PropertyUnavailableError
 player = MPV(vid="no", input_vo_keyboard=False)
-logging.debug("Init player: {}".format{player})
+logging.debug("Init player: {}".format(player))
 # Property access, these can be changed at runtime
 @player.property_observer('time-pos')
 def time_observer(_name, value):
