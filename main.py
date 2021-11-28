@@ -1,6 +1,6 @@
 import logging
 import time
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s', filename='audio.log', encoding='utf-8', level=logging.DEBUG,)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s', filename='audio.log', encoding='utf-8')
 
 
 audio1 = "/home/pi/playout/audio1.wav"
