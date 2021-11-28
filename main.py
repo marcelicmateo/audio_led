@@ -51,9 +51,6 @@ from mpv import MPV, PropertyUnavailableError
 
 player = MPV(vid="no", input_vo_keyboard=False)
 
-FADE_TIME = 1
-
-
 def cb_b(number):
     player.stop()
     player.play(cx[number].audio)
@@ -63,25 +60,24 @@ def cb_b(number):
     cx[number].led.on()
 
 
-def cb_b1():
+def cb_b1(btn):
     cb_b(0)
 
 
-def cb_b2():
+def cb_b2(btn):
     cb_b(1)
 
 
-def cb_b3():
+def cb_b3(btn):
     cb_b(2)
 
 
-def cb_b4():
+def cb_b4(btn):
     cb_b(3)
 
 
-def cb_b_stop():
+def cb_b_stop(btn):
     player.stop()
-
 
 button_stop = Button(
     btnStop,
