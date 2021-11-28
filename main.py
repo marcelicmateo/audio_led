@@ -70,6 +70,11 @@ def time_observer(_name, value):
     # fractional seconds since the beginning of the file.
     if value is not None:
         print("Now playing at {:.2f}s".format(value))
+    else:
+        logging.debug("Player stopped, turning off all LEDs")
+        for c in cx:
+            logging.debug("LED OFF: {}".format(c))
+            c.led.off()
 
 
 def cb_b(number):
@@ -78,6 +83,7 @@ def cb_b(number):
     player.play(cx[number].audio)
     for c in cx:
         if c.led.value != 0:
+            logging.debug("LED OFF: {}".format(c.led.pin))
             c.led.off()
     logging.debug("LED ON: {}".format(cx[number]))
     cx[number].led.on()
@@ -90,7 +96,6 @@ def cb_b1(btn):
 
 def cb_b2(btn):
     logging.debug("{} was pressed".format(btn.pin))
-
     cb_b(1)
 
 
@@ -125,9 +130,3 @@ from time import sleep
 logging.debug("Running while loop")
 while True:
     sleep(1)
-    logging.debug("Waiting player to stop")
-    player.wait_until_paused()
-    logging.debug("Player stopped, turning off all LEDs")
-    for c in cx:
-        logging.debug("LED OFF: {}".format(c))
-        c.led.off()
