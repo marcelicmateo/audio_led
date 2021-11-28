@@ -5,7 +5,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s",
     filename="audio.log",
-    filemode='w',
+    filemode="w",
 )
 
 
@@ -62,22 +62,25 @@ for key, data in data.items():
 
 from mpv import MPV, PropertyUnavailableError
 
-player = MPV(vid="no", input_vo_keyboard=False)
+
+def my_log(loglevel, component, message):
+    logging.debug("[{}] {}: {}".format(loglevel, component, message))
+
+
+player = MPV(vid="no", input_vo_keyboard=False, log_handler=my_log, idle=True)
 logging.debug("Init player: {}".format(player))
 
+PLAYING = 0
 
 
 def cb_b(number):
-    player.stop()
+    global PLAYING
+    PLAYING = number + 1
+    logging.debug("PLAYING :{}".format(PLAYING))
     logging.debug("Playing audio: {}".format(cx[number].audio))
     player.play(cx[number].audio)
     player.wait_until_playing()
-    logging.debug("LED ON: {}".format(cx[number]))
     cx[number].led.on()
-    sleep(0.5)
-    player.wait_until_paused()
-    logging.debug("LED OFF: {}".format(cx[number]))
-    cx[number].led.off()
 
 
 def cb_b1(btn):
@@ -101,6 +104,8 @@ def cb_b4(btn):
 
 
 def cb_b_stop(btn):
+    global PLAYING
+    logging.debug("PLAYING :{}".format(PLAYING))
     logging.debug("STOP:{} was pressed".format(btn.pin))
     player.stop()
 
@@ -121,3 +126,4 @@ from time import sleep
 logging.debug("Running while loop")
 while True:
     sleep(1)
+    player.wait_for_property('idle_active')
