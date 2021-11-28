@@ -68,7 +68,7 @@ logging.debug("Init player: {}".format(player))
 def time_observer(_name, value):
     # Here, _value is either None if nothing is playing or a float containing
     # fractional seconds since the beginning of the file.
-    if value not is None:
+    if value is not None:
         print("Now playing at {:.2f}s".format(value))
 
 
