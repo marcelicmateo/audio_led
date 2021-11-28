@@ -1,3 +1,8 @@
+import logging
+import time
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s', filename='audio.log', encoding='utf-8', level=logging.DEBUG,)
+
+
 audio1 = "/home/pi/playout/audio1.wav"
 audio2 = "/home/pi/playout/audio2.wav"
 audio3 = "/home/pi/playout/audio3.wav"
@@ -20,6 +25,8 @@ data = {
     btn3: {"audio": audio3, "led_pin": led3},
     btn4: {"audio": audio4, "led_pin": led4},
 }
+
+logging.debug("Configured values: {}".format(data))
 from gpiozero import Button, LED
 from dataclasses import dataclass
 from pathlib import Path
@@ -48,35 +55,50 @@ for key, data in data.items():
     )
 
 from mpv import MPV, PropertyUnavailableError
-
 player = MPV(vid="no", input_vo_keyboard=False)
+logging.debug("Init player: {}".format{player})
+# Property access, these can be changed at runtime
+@player.property_observer('time-pos')
+def time_observer(_name, value):
+    # Here, _value is either None if nothing is playing or a float containing
+    # fractional seconds since the beginning of the file.
+    print('Now playing at {:.2f}s'.format(value))
+
 
 def cb_b(number):
-    player.stop()
+    #player.stop()
+    logging.debug("Playing audio: {}".format(cx[number].audio))
     player.play(cx[number].audio)
     for c in cx:
         if c.led.value != 0:
             c.led.off()
+    logging.debug("LED ON: {}".format(cx[number]))
     cx[number].led.on()
 
 
 def cb_b1(btn):
+    logging.debug("{} was pressed".format(btn.pin))
     cb_b(0)
 
 
 def cb_b2(btn):
+    logging.debug("{} was pressed".format(btn.pin))
+
     cb_b(1)
 
 
 def cb_b3(btn):
+    logging.debug("{} was pressed".format(btn.pin))
     cb_b(2)
 
 
 def cb_b4(btn):
+    logging.debug("{} was pressed".format(btn.pin))
     cb_b(3)
 
 
 def cb_b_stop(btn):
+    logging.debug("STOP:{} was pressed".format(btn.pin))
     player.stop()
 
 button_stop = Button(
@@ -92,8 +114,12 @@ for i, c in enumerate(cx):
 
 from time import sleep
 
+logging.debug("Running while loop")
 while True:
     sleep(1)
+    logging.debug("Waiting player to stop")
     player.wait_until_paused()
+    logging.debug("Player stopped, turning off all LEDs")
     for c in cx:
+        logging.debug("LED OFF: {}".format(c))
         c.led.off()
