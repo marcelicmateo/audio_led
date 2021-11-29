@@ -64,9 +64,17 @@ from mpv import MPV, PropertyUnavailableError
 
 def my_log(loglevel, component, message):
     logging.debug("[{}] {}: {}".format(loglevel, component, message))
-
-
 player = MPV(vid="no", input_vo_keyboard=False, log_handler=my_log, idle=True)
+
+TIME_PLAYER=0
+# Property access, these can be changed at runtime
+@player.property_observer('time-pos')
+def time_observer(_name, value):
+    # Here, _value is either None if nothing is playing or a float containing
+    # fractional seconds since the beginning of the file.
+    global TIME_PLAYER
+    TIME_PLAYER = value
+
 logging.debug("Init player: {}".format(player))
 
 PLAYING = 0
@@ -131,8 +139,6 @@ from time import sleep
 logging.debug("Running while loop")
 while True:
     sleep(1)
-    logging.debug("Waiting until paused")
-    player.wait_until_paused()
-    logging.debug("Paused ")
+    logging.debug("TIME_PLAYING = {}".format(TIME_PLAYER))
 
 
