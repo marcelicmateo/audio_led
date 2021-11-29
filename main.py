@@ -141,10 +141,13 @@ while True:
     sleep(1)
     logging.debug("TIME_PLAYING = {}".format(TIME_PLAYER))
     if TIME_PLAYER is None:
+        logging.debug("TIME_PLAYING_IN1 = {}".format(TIME_PLAYER))
         sleep(0.1)
         if TIME_PLAYER is None:
+           logging.debug("TIME_PLAYING_IN1 = {}".format(TIME_PLAYER))
            for c in cx:
                 if c.led.value != 0:
+                    logging.debug("Killing = {}".format(c.led))
                     c.led.off() 
 
 
