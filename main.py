@@ -79,6 +79,9 @@ def cb_b(number):
     logging.debug("Playing audio: {}".format(cx[number].audio))
     player.play(cx[number].audio)
     player.wait_until_playing()
+    for c in cx:
+        if c.led.value != 0:
+            c.led.off()
     cx[number].led.on()
 
 
@@ -107,6 +110,9 @@ def cb_b_stop(btn):
     logging.debug("PLAYING :{}".format(PLAYING))
     logging.debug("STOP:{} was pressed".format(btn.pin))
     player.stop()
+    for c in cx:
+        if c.led.value != 0:
+            c.led.off()
 
 
 button_stop = Button(
@@ -125,8 +131,8 @@ from time import sleep
 logging.debug("Running while loop")
 while True:
     sleep(1)
-    player.wait_for_property('idle_active')
-    logging.debug("It is idle, kill all leds")
-    for c in cx:
-        c.led.off()
+    logging.debug("Waiting until paused")
+    player.wait_until_paused()
+    logging.debug("Paused ")
+
 
