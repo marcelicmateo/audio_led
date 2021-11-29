@@ -5,7 +5,6 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s",
     filename="audio.log",
-    filemode="w",
 )
 
 
