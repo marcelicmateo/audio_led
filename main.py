@@ -140,5 +140,11 @@ logging.debug("Running while loop")
 while True:
     sleep(1)
     logging.debug("TIME_PLAYING = {}".format(TIME_PLAYER))
+    if TIME_PLAYER is None:
+        sleep(0.1)
+        if TIME_PLAYER is None:
+           for c in cx:
+                if c.led.value != 0:
+                    c.led.off() 
 
 
