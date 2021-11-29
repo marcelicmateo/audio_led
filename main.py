@@ -6,7 +6,6 @@ logging.basicConfig(
     format="%(asctime)s: %(relativeCreated)6d %(threadName)s > %(message)s",
     filename="audio.log",
 )
-logging.disable=True
 
 
 audio1 = "/home/pi/playout/audio1.wav"
